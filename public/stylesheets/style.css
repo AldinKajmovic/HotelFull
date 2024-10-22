@@ -1,0 +1,90 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 400;
+
+}
+#navbar{
+  background-color:whitesmoke;
+}
+
+
+.nav-link {
+  font-size: 14px;
+  color: black;
+  position: relative;
+  overflow: hidden;
+  padding: 10px 15px;
+  z-index: 1;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #168FBA;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  z-index: -1;
+}
+
+.nav-link:hover::after {
+  transform: translateX(0);
+}
+
+.nav-link:hover {
+  color: white;
+}
+.carousel-item img {
+  height: 700px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.carousel-caption {
+  font-family: "Gilda Display",serif;
+  height: 50%;
+}
+
+h5 {
+  color: white !important;
+  font-size: 40px !important;
+  line-height:1.35em !important;
+}
+.service-block i{
+  font-size: 40px !important;
+}
+.contact-block i {
+  margin-right: 8px;
+}
+.footer-text{
+  color:black !important;
+}
+#slike img{
+  height: 300px;
+}
+#sobe h4{
+  font-size:20px !important;
+}
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer{
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: 50%;
+  transform: translateX(-50%);
+
+}

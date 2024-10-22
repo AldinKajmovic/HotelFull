@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
+</head>
+<body>
+<div id="navbar">
+  <nav class="navbar navbar-expand-lg navbar-light py-3">
+    <div class="container-fluid"><a class="navbar-brand" href="#">Hotel</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarLinks">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center w-100 ">
+          <li class="nav-item"><a class="nav-link" href="/#about-us">O NAMA</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#sobe">SOBE</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#contact-block">KONTAKTIRAJ NAS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container mt-5">
+  <h2>Odaberite Datume</h2>
+  <form id="dateForm">
+    <div class="form-group">
+      <label for="odDatum">Početni Datum:</label>
+      <input type="date" class="form-control" id="odDatum" name="odDatum" required>
+    </div>
+    <div class="form-group">
+      <label for="doDatum">Krajnji Datum:</label>
+      <input type="date" class="form-control" id="doDatum" name="doDatum" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Pošalji</button>
+  </form>
+</div>
+
+<h1 class="text-center mt-3">Izvještaji</h1>
+
+<div class="container mt-3" id="reportContainer">
+  <div class="row">
+    <div class="col-md-4" id="gostiDrzaveContainer">
+    </div>
+    <div class="col-md-4" id="gostiSmjestajContainer">
+    </div>
+    <div class="col-md-4" id="nocenjaDrzaveContainer">
+    </div>
+  </div>
+</div>
+
+
+<footer class="bg-light text-center py-3 footer">
+  <div class="container footer-text"> &copy; 2024 Naziv hotela | <a href="https://facebook.com" class="text-dark"><i class="fab fa-facebook"></i></a> | <a href="https://twitter.com" class="text-dark"><i class="fab fa-twitter"></i></a> | <a href="https://instagram.com" class="text-dark"><i class="fab fa-instagram"></i></a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#dateForm').on('submit', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        url: '/izvjestaji',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+          $('#gostiDrzaveContainer').html('');
+          $('#gostiSmjestajContainer').html('');
+          $('#nocenjaDrzaveContainer').html('');
+
+          if (response.gostiDrzave && response.gostiDrzave.length > 0) {
+            let table = `<table class="table table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th>Naziv države</th>
+                      <th>Broj gostiju</th>
+                    </tr>
+                  </thead>
+                  <tbody>`;
+            response.gostiDrzave.forEach(item => {
+              table += `<tr>
+                  <td>${item.nazivDrzave}</td>
+                  <td>${item.brojGostiPeriod}</td>
+                </tr>`;
+            });
+            table += `</tbody></table>`;
+            $('#gostiDrzaveContainer').append(table);
+          }
+
+          if (response.gostiSmjestaj && response.gostiSmjestaj.length > 0) {
+            let table = `<table class="table table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th>Naziv smještaja</th>
+                      <th>Broj gostiju</th>
+                    </tr>
+                  </thead>
+                  <tbody>`;
+            response.gostiSmjestaj.forEach(item => {
+              table += `<tr>
+                  <td>${item.nazivSmjestaja}</td>
+                  <td>${item.brojGostijuPeriod}</td>
+                </tr>`;
+            });
+            table += `</tbody></table>`;
+            $('#gostiSmjestajContainer').append(table);
+          }
+
+          if (response.nocenjaDrzave && response.nocenjaDrzave.length > 0) {
+            let table = `<table class="table table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th>Naziv države</th>
+                      <th>Broj noćenja</th>
+                    </tr>
+                  </thead>
+                  <tbody>`;
+            response.nocenjaDrzave.forEach(item => {
+              table += `<tr>
+                  <td>${item.nazivDrzave}</td>
+                  <td>${item.brojNocenja}</td>
+                </tr>`;
+            });
+            table += `</tbody></table>`;
+            $('#nocenjaDrzaveContainer').append(table);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
