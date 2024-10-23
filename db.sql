@@ -1,4 +1,3 @@
-USE baza2;
 
 DROP TABLE IF EXISTS `pogledSoba`;
 DROP VIEW IF EXISTS `pogledSoba`;
@@ -115,13 +114,6 @@ CREATE TABLE `sobe` (
   UNIQUE KEY `brojSobe` (`brojSobe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `daNePDV`;
-CREATE TABLE `daNePDV` (
-  `idOdgovora` tinyint NOT NULL,
-  `znacenjeOdgovora` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`idOdgovora`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `inventar`;
 CREATE TABLE `inventar` (
   `sifraInventara` int NOT NULL AUTO_INCREMENT,
@@ -210,7 +202,13 @@ ALTER TABLE `stavke`
   ADD CONSTRAINT `fk_stavke_ref_alotman` FOREIGN KEY (`sifraAlotmana`) REFERENCES `alotman` (`sifraAlotman`),
   ADD CONSTRAINT `fk_stavke_ref_tipsobe` FOREIGN KEY (`tipSobeID`) REFERENCES `tipSobe` (`tipSobeID`);
 
-use baza2;
+ALTER TABLE `inventarsoba` 
+  ADD CONSTRAINT `fk_inventarSoba_ref_inventar` FOREIGN KEY (`sifraInventara`) REFERENCES `inventar` (`sifraInventara`);
+
+ALTER TABLE `najava` 
+  ADD CONSTRAINT `fk_najava_ref_status` FOREIGN KEY (`statusNajave`) REFERENCES `status` (`idStatus`);
+
+
 LOCK TABLES `objekti` WRITE;
 ALTER TABLE `objekti` DISABLE KEYS;
 INSERT INTO `objekti` VALUES (1,'Glavna zgrada'),(2,'Sporedna zgrada broj 1'),(4,'Sporedna zgrada broj 2');
@@ -221,12 +219,6 @@ LOCK TABLES `mjestoBoravka` WRITE;
 ALTER TABLE `mjestoBoravka` DISABLE KEYS;
 INSERT INTO `mjestoBoravka` VALUES (1,'Dublin'),(2,'Barcelona'),(3,'Kopenhagen'),(4,'Zürich'),(5,'Moskva'),(6,'Istanbul'),(7,'Budimpešta'),(8,'Sofija'),(9,'Bukurešt'),(10,'Kijev'),(11,'Pariz'),(12,'Stockholm'),(13,'Beč'),(14,'Amsterdam'),(15,'Prag'),(16,'Oslo'),(17,'Atena'),(18,'Lisabon'),(19,'Bruxelles'),(20,'Helsinki'),(21,'Reykjavik'),(22,'Edinburgh'),(23,'Helsinki'),(24,'Bratislava'),(25,'Tallinn'),(26,'Riga'),(27,'Vilnius'),(28,'Luxembourg'),(29,'Valeta'),(30,'Nikozija'),(31,'Düsseldorf'),(32,'Varšava'),(33,'Rim'),(34,'Zagreb'),(35,'Beograd'),(36,'Madrid'),(37,'Brussels'),(38,'Budapest'),(39,'Ljubljana'),(40,'Skopje'),(41,'Varna'),(42,'Cluj-Napoca'),(43,'Lviv'),(44,'Nice'),(45,'Gothenburg'),(46,'Innsbruck'),(47,'Rotterdam'),(48,'České Budějovice'),(49,'Stavanger'),(50,'Thessaloniki'),(51,'Lisieux'),(52,'Malaga'),(53,'Copenhagen'),(54,'Zug'),(55,'Saint Petersburg'),(56,'Izmir'),(57,'Pécs'),(58,'Sofia'),(59,'Timișoara'),(60,'Kharkiv'),(61,'Marseille'),(62,'Gothenburg'),(63,'Graz'),(64,'Utrecht'),(65,'Brno'),(66,'Bergen'),(67,'Thessaloniki'),(68,'Porto'),(69,'Brussels'),(70,'Oulu');
 ALTER TABLE `mjestoBoravka` ENABLE KEYS;
-UNLOCK TABLES;
-
-LOCK TABLES `daNePDV` WRITE;
-ALTER TABLE `daNePDV` DISABLE KEYS;
-INSERT INTO `daNePDV` VALUES (0,'NE'),(1,'DA');
-ALTER TABLE `daNePDV` ENABLE KEYS;
 UNLOCK TABLES;
 
 LOCK TABLES `inventar` WRITE;
@@ -321,7 +313,7 @@ INSERT INTO `stavke` VALUES (1,1,5),(1,2,3),(1,3,2),(2,1,4),(2,3,1),(3,1,2),(3,2
 ALTER TABLE `stavke` ENABLE KEYS;
 UNLOCK TABLES;
 
-use baza2;
+
 
 /*Broj gostiju po mjescima */
 DELIMITER //
