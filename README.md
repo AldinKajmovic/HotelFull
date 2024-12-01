@@ -13,10 +13,6 @@ Installation
 
 To run this application locally, follow these steps:
 
-  Clone the repository:
-
-    git clone https://github.com/AldinKajmovic/HotelFull.git
-    cd HotelFull
 
 Install the necessary dependencies:
 
@@ -35,6 +31,6 @@ Screenshots:
   <img src="https://github.com/user-attachments/assets/58d69204-51c2-4ec8-bde1-6dfd9ad35be7" alt="Screenshot 1" width="500"  />
   <img src="https://github.com/user-attachments/assets/1e357326-4886-45f4-8788-e2ade08d7bed" alt="Screenshot 2" width="600"  />
  <img src="https://github.com/user-attachments/assets/8cda8e87-db4c-4fbf-b1ac-4c0a73dfa2a8" alt="Screenshot 4" width="500"  />
- <img src="https://github.com/user-attachments/assets/090628b3-8393-44e1-88ef-6d461bcbc254" alt="Screenshot 3" width="800"  />
+
 
 
